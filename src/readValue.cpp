@@ -2,17 +2,36 @@
 
 #include <iostream>
 #include <string>
-int promptAndRead(const std::string &prompt) {
-    int input = 0;
+std::string promptAndRead(const std::string &prompt) {
+    std::string input;
     std::cout << prompt << std::endl;
-    std::cin >> input;
+    std::getline(std::cin,input);
+    std::cout<<std::endl;
+    std::cin.clear();
     return input;
 }
-int readValue(const int min, const int max, const std::string &prompt, const std::string &err) {
-    int readInput = promptAndRead(prompt);
-    while (readInput<min || readInput>max) {
-        std::cerr << err << std::endl;
-        readInput = promptAndRead(prompt);
+int readValue(const int min, const int max, const std::string &prompt, const std::string &err, int def) {
+    std::string readInput = promptAndRead(prompt);
+    int entry;
+    if (readInput == "exit") {
+        return -1;
+    }else if (readInput == "def") {
+        entry = def;
+    }else {
+        entry = std::stoi(readInput);//Assuming user inputs a number if not a specified keyword;
     }
-    return readInput;
+
+    while (entry<min || entry>max) {
+        std::cout << err << std::endl;
+        readInput = promptAndRead(prompt);
+        if (readInput == "exit") {
+            return -1;
+        }else if (readInput == "def") {
+            entry = def;
+        }else {
+            entry = std::stoi(readInput);//Assuming user inputs a number if not a specified keyword;
+        }
+    }
+    std::cout << "The value read is: " << entry << std::endl;
+    return entry;
 }

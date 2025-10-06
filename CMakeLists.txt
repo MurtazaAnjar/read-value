@@ -16,6 +16,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Catch2)
 
 add_executable(readValue_test tests/readValue_test.cpp src/readValue.cpp)
-add_executable(main main.cpp src/readValue.cpp)
+add_executable(main src/readValue.cpp
+        main.cpp)
 
 target_link_libraries(readValue_test PRIVATE Catch2::Catch2WithMain)
